@@ -3,40 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/header.css">
+    <title>Blog Home</title>
+
+    <link rel="stylesheet" href="/css/header.css">
 </head>
+
 <body>
+
     <% if (cond) { %>
-        <%- include("partials/header2.ejs") %>
+        <%- include("partials/header2") %>
     <% } else { %>
-        <%- include("partials/header.ejs") %>
+        <%- include("partials/header") %>
     <% } %>
+
     <% if (posts.length === 0) { %>
-    <div class="empty">
-        <h1>No posts yet </h1>
-        <p>Be the first to create a blog post!</p>
 
-        <% if (cond) { %>
-            <a href="/compose">Create Your First Post</a>
-        <% } %>
-    </div>
-<% } else { %>
+        <div class="empty">
+            <h1>No posts yet</h1>
+            <p>Be the first to create a blog post!</p>
 
-    <div class="post">    
-        <% posts.forEach(function(post) { %>
-            <div class="post-block">
-            <h1 style="color: black;"><%= post.title %></h1>
-            <p><%= post.content %></p>
-            <div class="edit">
-                <form action="/delete/<%= post.id %>" method="POST">
-                    <button type="submit">Delete</button>
-                 </form>
-                 <button><a href="/edit/<%= post.id %>" class="eb">Edit</a></button>
-            </div>
-            </div>
-        <% }) %>
+            <% if (cond) { %>
+                <a href="/post">Create Your First Post</a>
+            <% } %>
+        </div>
+
+    <% } else { %>
+
+        <div class="post">
+
+            <% posts.forEach(function(post){ %>
+
+                <div class="post-block">
+
+                    <h1><%= post.title %></h1>
+
+                    <p><%= post.content %></p>
+
+                    <p><strong>Author:</strong> <%= post.author %></p>
+
+                    <% if (cond && user === post.author) { %>
+
+                        <div class="edit">
+
+                            <form action="/delete/<%= post.id %>" method="POST">
+                                <button type="submit">Delete</button>
+                            </form>
+
+                            <a href="/edit/<%= post.id %>" class="eb">Edit</a>
+
+                        </div>
+
+                    <% } %>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
     <% } %>
-    </div>
+
 </body>
 </html>

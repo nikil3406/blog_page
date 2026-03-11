@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/login.css">
+    <title>Create Post</title>
+
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
+
 <body>
-    <%- include("partials/header2.ejs") %>
+
+    <%- include("partials/header2") %>
+
     <div class="container">
+
         <form action="/compose" method="POST" class="login-form">
+
+            <h2 class="head">Create Blog Post</h2>
 
             <div class="form-group">
                 <label>Title</label>
@@ -25,6 +32,8 @@
             <button type="submit">Publish</button>
 
         </form>
+
     </div>
+
 </body>
 </html>

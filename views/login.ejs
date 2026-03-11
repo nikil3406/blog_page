@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/login.css">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
+
 <body class="b">
-    <%- include("partials/header.ejs") %>
+
+    <%- include("partials/header") %>
 
     <form action="/login2" method="POST" class="login-form">
+
         <h2 class="head">Login</h2>
 
         <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" required>
+            <label>Username</label>
+            <input type="text" name="name" required>
         </div>
 
         <div class="form-group">
@@ -26,7 +30,6 @@
         <button type="submit">Login</button>
 
     </form>
-
 
 </body>
 </html>

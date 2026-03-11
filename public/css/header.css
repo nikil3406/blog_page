@@ -7,7 +7,186 @@ header{
 }
 .three{
     background: rgb(2, 4, 40);
-    padding-top: 15px;
+    padding-/* RESET */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background: #eef2f7;
+    color:#222;
+}
+
+/* HEADER */
+
+header{
+    width:100%;
+}
+
+.three{
+    background:#020428;
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.one{
+    display:flex;
+    gap:30px;
+    align-items:center;
+}
+
+.two{
+    display:flex;
+    gap:25px;
+    align-items:center;
+}
+
+h1{
+    color:white;
+}
+
+/* LINKS */
+
+a{
+    text-decoration:none;
+    color:#d0d6ff;
+    font-weight:500;
+    transition:0.2s;
+}
+
+a:hover{
+    color:#ffffff;
+}
+
+/* POSTS */
+
+.post{
+    width:70%;
+    margin:40px auto;
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+}
+
+.post-block{
+    background:white;
+    border-radius:10px;
+    padding:20px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.15);
+    transition:0.2s;
+}
+
+.post-block:hover{
+    transform:translateY(-2px);
+}
+
+.post-block h1{
+    color:#111;
+    font-size:22px;
+    margin-bottom:10px;
+}
+
+.post-block p{
+    line-height:1.6;
+}
+
+/* EDIT BUTTONS */
+
+.edit{
+    margin-top:15px;
+    display:flex;
+    gap:15px;
+}
+
+button{
+    padding:7px 14px;
+    border:none;
+    border-radius:5px;
+    background:#007bff;
+    color:white;
+    cursor:pointer;
+    font-size:14px;
+}
+
+button:hover{
+    background:#0056b3;
+}
+
+.eb{
+    color:white;
+}
+
+/* EMPTY STATE */
+
+.empty{
+    text-align:center;
+    margin-top:120px;
+}
+
+.empty h1{
+    color:#333;
+    margin-bottom:10px;
+}
+
+.empty a{
+    display:inline-block;
+    margin-top:15px;
+    background:#007bff;
+    color:white;
+    padding:10px 20px;
+    border-radius:6px;
+}
+
+.empty a:hover{
+    background:#0056b3;
+}
+
+/* INPUTS */
+
+input,
+textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width:900px){
+
+    .post{
+        width:85%;
+    }
+
+}
+
+@media (max-width:600px){
+
+    .three{
+        flex-direction:column;
+        gap:15px;
+        text-align:center;
+    }
+
+    .one,
+    .two{
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    .post{
+        width:92%;
+    }
+
+}top: 15px;
     padding-bottom: 15px;
     display: flex;
     flex-direction: row;

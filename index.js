@@ -55,7 +55,7 @@ app.post("/signup", (req, res) => {
     const existingUser = users.find(user => user.name === name);
 
     if (existingUser) {
-        return res.send("User already exists");
+        return res.redirect("login");
     }
 
     users.push({ name, password });

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <%- include("partials/header2.ejs") %>
+    <div class="container">
+        <form action="/compose" method="POST" class="login-form">
+
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" required>
+            </div>
+
+            <div class="form-group">
+                <label>Content</label>
+                <textarea name="content" rows="6" required></textarea>
+            </div>
+
+            <button type="submit">Publish</button>
+
+        </form>
+    </div>
+</body>
+</html>

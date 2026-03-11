@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/header.css">
+</head>
+<body>
+    <% if (cond) { %>
+        <%- include("partials/header2.ejs") %>
+    <% } else { %>
+        <%- include("partials/header.ejs") %>
+    <% } %>
+    <% if (posts.length === 0) { %>
+    <div class="empty">
+        <h1>No posts yet </h1>
+        <p>Be the first to create a blog post!</p>
+
+        <% if (cond) { %>
+            <a href="/compose">Create Your First Post</a>
+        <% } %>
+    </div>
+<% } else { %>
+
+    <div class="post">    
+        <% posts.forEach(function(post) { %>
+            <div class="post-block">
+            <h1 style="color: black;"><%= post.title %></h1>
+            <p><%= post.content %></p>
+            <div class="edit">
+                <form action="/delete/<%= post.id %>" method="POST">
+                    <button type="submit">Delete</button>
+                 </form>
+                 <button><a href="/edit/<%= post.id %>" class="eb">Edit</a></button>
+            </div>
+            </div>
+        <% }) %>
+    <% } %>
+    </div>
+</body>
+</html>

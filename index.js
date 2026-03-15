@@ -1,20 +1,22 @@
 import express from "express";
+import axios from "axios";
 
 const app = express();
 const port = 3000;
+const API_URL = "http://localhost:4000";
 
 app.set("view engine", "ejs");
+
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
-/* ================= DATA ================= */
+/* DATA */
 
 let users = [];
-let posts = [];
 let isLoggedIn = false;
 let currentUser = null;
 
-/* ================= HELPER ================= */
+/* LOGIN CHECK */
 
 function requireLogin(req, res, next) {
     if (!isLoggedIn) {
@@ -23,39 +25,39 @@ function requireLogin(req, res, next) {
     next();
 }
 
-/* ================= HOME ================= */
+/* HOME */
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+
+    const result = await axios.get(`${API_URL}/posts`);
+
     res.render("index", {
-        posts,
+        posts: result.data,
         cond: isLoggedIn,
         user: currentUser
     });
 });
 
-/* ================= LOGIN & SIGNUP ================= */
+/* LOGIN */
 
 app.get("/login", (req, res) => {
     res.render("login");
 });
 
+/* SIGNUP */
+
 app.get("/sign", (req, res) => {
     res.render("sign");
 });
 
-/* ---------- SIGNUP ---------- */
-
 app.post("/signup", (req, res) => {
+
     const { name, password } = req.body;
 
-    if (!name || !password) {
-        return res.send("Please fill all fields");
-    }
-
-    const existingUser = users.find(user => user.name === name);
+    const existingUser = users.find(u => u.name === name);
 
     if (existingUser) {
-        return res.redirect("login");
+        return res.redirect("/login");
     }
 
     users.push({ name, password });
@@ -66,13 +68,14 @@ app.post("/signup", (req, res) => {
     res.redirect("/");
 });
 
-/* ---------- LOGIN ---------- */
+/* LOGIN */
 
 app.post("/login2", (req, res) => {
+
     const { name, password } = req.body;
 
     const foundUser = users.find(
-        user => user.name === name && user.password === password
+        u => u.name === name && u.password === password
     );
 
     if (!foundUser) {
@@ -85,83 +88,61 @@ app.post("/login2", (req, res) => {
     res.redirect("/");
 });
 
-/* ---------- LOGOUT ---------- */
+/* LOGOUT */
 
 app.get("/out", (req, res) => {
+
     isLoggedIn = false;
     currentUser = null;
 
     res.redirect("/");
 });
 
-/* ================= CREATE POST ================= */
+/* CREATE POST */
 
 app.get("/post", requireLogin, (req, res) => {
-    res.render("post", { cond: isLoggedIn });
+    res.render("post");
 });
 
-app.post("/compose", requireLogin, (req, res) => {
+app.post("/compose", requireLogin, async (req, res) => {
 
-    const newPost = {
-        id: Date.now(),
+    await axios.post(`${API_URL}/posts`, {
         title: req.body.title,
         content: req.body.content,
         author: currentUser
-    };
-
-    posts.push(newPost);
-
-    res.redirect("/");
-});
-
-/* ================= DELETE POST ================= */
-
-app.post("/delete/:id", requireLogin, (req, res) => {
-
-    const id = Number(req.params.id);
-
-    posts = posts.filter(post => {
-        return !(post.id === id && post.author === currentUser);
     });
 
     res.redirect("/");
 });
 
-/* ================= EDIT POST ================= */
+/* DELETE */
 
-app.get("/edit/:id", requireLogin, (req, res) => {
+app.get("/delete/:id", requireLogin, async (req, res) => {
 
-    const id = Number(req.params.id);
-
-    const post = posts.find(
-        p => p.id === id && p.author === currentUser
-    );
-
-    if (!post) {
-        return res.redirect("/");
-    }
-
-    res.render("edit", { post });
-});
-
-app.post("/edit2/:id", requireLogin, (req, res) => {
-
-    const id = Number(req.params.id);
-
-    const post = posts.find(
-        p => p.id === id && p.author === currentUser
-    );
-
-    if (post) {
-        post.title = req.body.title;
-        post.content = req.body.content;
-    }
+    await axios.delete(`${API_URL}/posts/${req.params.id}`);
 
     res.redirect("/");
 });
 
-/* ================= SERVER ================= */
+/* EDIT */
+
+app.get("/edit/:id", requireLogin, async (req, res) => {
+
+    const result = await axios.get(`${API_URL}/posts/${req.params.id}`);
+
+    res.render("edit", { post: result.data });
+});
+
+app.post("/edit2/:id", requireLogin, async (req, res) => {
+
+    await axios.patch(`${API_URL}/posts/${req.params.id}`, {
+        title: req.body.title,
+        content: req.body.content
+    });
+
+    res.redirect("/");
+});
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    console.log(`Frontend running on port ${port}`);
 });

@@ -12,28 +12,15 @@
 <body>
 
     <%- include("partials/header2") %>
-
-    <div class="container">
-
-        <form action="/compose" method="POST" class="login-form">
-
-            <h2 class="head">Create Blog Post</h2>
-
-            <div class="form-group">
-                <label>Title</label>
-                <input type="text" name="title" required>
-            </div>
-
-            <div class="form-group">
-                <label>Content</label>
-                <textarea name="content" rows="6" required></textarea>
-            </div>
-
-            <button type="submit">Publish</button>
-
+      <div class="container">
+        <form id="newPostForm" method="post" action="/compose">
+          <input type="text" name="title" placeholder="Title" required>
+          <textarea name="content" placeholder="Content" required rows="10"></textarea>
+          <button class="full-width" type="submit">
+            submit
+          </button>
         </form>
-
-    </div>
-
+      </div>
 </body>
 </html>
+
